@@ -1,7 +1,7 @@
 import React from 'react'
 //import { Block, Text, Button } from 'expo-ui-kit';
 import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
@@ -41,10 +41,37 @@ const Screens = ({navigation}) => {
     ); 
 };
 
+//build custom drawer menu
+
+const DrawerContent = (props) => {
+    return (
+        <DrawerContentScrollView {...props}>
+            {/* <DrawerItemList {...props} /> */}
+            <DrawerItem
+                label="Home"
+                onPress={() => props.navigation.navigate("Home")}
+            />
+            <DrawerItem
+                label="Categories"
+                onPress={() => props.navigation.navigate("Categories")}
+            />
+            <DrawerItem
+                label="Nutrition"
+                onPress={() => props.navigation.navigate("Nutrition")}
+            />
+            <DrawerItem
+                label="Search"
+                onPress={() => props.navigation.navigate("Search")}
+            />
+        </DrawerContentScrollView>
+    )
+}
 
 export default () => {
     return (
-        <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Navigator 
+            initialRouteName="Home"
+            drawerContent={(props) => <DrawerContent {...props} />}>
             <Drawer.Screen name="Screens" component={Screens} />
       </Drawer.Navigator>
     );
