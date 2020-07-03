@@ -1,11 +1,10 @@
 import React from 'react'
-//import { Block, Text, Button } from 'expo-ui-kit';
-import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Ionicons, AntDesign, Feather } from '@expo/vector-icons';
-
-
+import { AntDesign, Feather } from '@expo/vector-icons';
+import Animated from 'react-native-reanimated';
+import { LinearGradient } from 'expo-linear-gradient';
 
 //import screens
 import Categories from './src/screens/Categories';
@@ -16,14 +15,15 @@ import Home from './src/screens/Home';
 
 
 
-const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
-
-const Screens = ({navigation}) => {
-    return (
-        <Stack.Navigator
+const Screens = ({ navigation, style }) => {
+  return (
+    <Animated.View style={StyleSheet.flatten([styles.stack, style])}>
+      <Stack.Navigator
         screenOptions={{
+        gestureEnabled: false,
           headerTransparent: true,
           headerTitle: null,
           headerLeft: () => (
@@ -34,85 +34,145 @@ const Screens = ({navigation}) => {
             </TouchableOpacity>
           ),
         }}>
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Categories" component={Categories} />
-        <Stack.Screen name="Nutrition" component={Nutrition} />
-        <Stack.Screen name="Search" component={Search} />
-    </Stack.Navigator>
-    ); 
+        <Stack.Screen name="Home">{props => <Home {...props} />}</Stack.Screen>
+        <Stack.Screen name="Categories">{props => <Categories {...props} />}</Stack.Screen>
+        <Stack.Screen name="Nutrition">{props => <Nutrition {...props} />}</Stack.Screen>
+        <Stack.Screen name="Search">{props => <Search {...props} />}</Stack.Screen>
+      </Stack.Navigator>
+    </Animated.View>
+  );
 };
 
-//build custom drawer menu
-
-const DrawerContent = (props) => {
-    return (
-        <DrawerContentScrollView {...props}>
-            <View >
-                {/* <DrawerItemList {...props} /> */}
-            
-            <View style={styles.logo}>
-                <Image 
-                    source={require('./assets/spoon.jpg')}
-                    resizeMode = "center"
-                    style={{
-                        width: 80,
-                        height: 80,
-                        borderRadius: 30
-                    }} />
-                    <Text> Recipe App </Text>
-            </View>
-            <DrawerItem
+const DrawerContent = props => {
+  return (
+    <DrawerContentScrollView {...props} scrollEnabled={false} contentContainerStyle={{ flex: 1 }}>
+      <View>
+        <View  style = {styles.avatarPosition} >
+          <Image
+            source={{
+              uri: 'https://image.freepik.com/free-vector/minimal-logo-element-collection_23-2148379435.jpg',
+              height: 60,
+              width: 60,
+              scale: 0.5,
+            }}
+            resizeMode="center"
+            style={styles.avatar}
+          />
+          <Text style = {styles.title}>
+            Recipe and Nutrition
+          </Text>
+        </View>
+        <View style = {styles.tabs}>
+        <DrawerItem
                 label="Home"
-                labelStyle = {{ marginLeft: -16 }}
+                labelStyle={styles.drawerLabel}
+                style={styles.drawerItem}
                 onPress={() => props.navigation.navigate("Home")}
-                icon = {() => <AntDesign name = "home" color = "red" size = {20}/>}
+                icon = {() => <AntDesign name = "home" color="white" size = {22}/>}
             />
             <DrawerItem
                 label="Categories"
-                labelStyle = {{ marginLeft: -16 }}
+                labelStyle={styles.drawerLabel}
+                style={{ alignItems: 'flex-start', marginVertical: 0 }}
                 onPress={() => props.navigation.navigate("Categories")}
-                icon = {() => <AntDesign name = "switcher" color = "red" size = {20}/>}
+                icon = {() => <AntDesign name = "switcher" color="white" size = {22}/>}
             />
             <DrawerItem
                 label="Nutrition"
-                labelStyle = {{ marginLeft: -16 }}
+                labelStyle={styles.drawerLabel}
+                style={{ alignItems: 'flex-start', marginVertical: 0 }}
                 onPress={() => props.navigation.navigate("Nutrition")}
-                icon = {() => <AntDesign name = "piechart" color = "red" size = {20}/>}
+                icon = {() => <AntDesign name = "piechart" color="white" size = {22}/>}
             />
             <DrawerItem
                 label="Search"
-                labelStyle = {{ marginLeft: -16 }}
+                labelStyle={styles.drawerLabel}
+                style={{ alignItems: 'flex-start', marginVertical: 0 }}
                 onPress={() => props.navigation.navigate("Search")}
-                icon = {() => <AntDesign name = "search1" color = "red" size = {20}/>}
+                icon = {() => <AntDesign name = "search1" color="white" size = {22}/>}
             />
-            </View>
-        </DrawerContentScrollView>
-    )
-}
+        </View>
+      </View>
 
-export default () => {
-    return (
-        <Drawer.Navigator 
-            initialRouteName="Home"
-            drawerContent={(props) => <DrawerContent {...props} />}>
-            <Drawer.Screen name="Screens" component={Screens} />
-      </Drawer.Navigator>
-    );
+    </DrawerContentScrollView>
+  );
 };
 
+export default () => {
+  const [progress, setProgress] = React.useState(new Animated.Value(0));
+  const scale = Animated.interpolate(progress, {
+    inputRange: [0, 1],
+    outputRange: [1, 0.8],
+  });
+  const borderRadius = Animated.interpolate(progress, {
+    inputRange: [0, 1],
+    outputRange: [0, 16],
+  });
+
+  const animatedStyle = { borderRadius, transform: [{ scale }] };
+
+  return (
+    <LinearGradient style={{ flex: 1 }} colors={['#E94057', '#4A00E0']}>
+      <Drawer.Navigator
+        // hideStatusBar
+        drawerType="slide"
+        overlayColor="transparent"
+        drawerStyle={styles.drawerStyles}
+        contentContainerStyle={{ flex: 1 }}
+        drawerContentOptions={{
+          activeBackgroundColor: 'transparent',
+          activeTintColor: 'white',
+          inactiveTintColor: 'white',
+        }}
+        sceneContainerStyle={{ backgroundColor: 'transparent' }}
+        drawerContent={props => {
+          setProgress(props.progress);
+          return <DrawerContent {...props} />;
+        }}>
+        <Drawer.Screen name="Screens">
+          {props => <Screens {...props} style={animatedStyle} />}
+        </Drawer.Screen>
+      </Drawer.Navigator>
+    </LinearGradient>
+  );
+};
 
 const styles = StyleSheet.create({
     button: {
-      alignItems: "center",
-      padding: 10,
-      marginHorizontal: 20
-    },
-    logo: {
-        flex: 0.4,
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 20,
-        marginRight: 20,
+        alignItems: "center",
+        padding: 10,
+        marginHorizontal: 20
       },
-  });
-  
+    avatarPosition: {
+          marginTop: 40,
+          marginLeft: 30,
+        },
+    tabs: {
+        marginTop: 40,
+        marginBottom: 20,
+        marginLeft: 13,
+          },
+    stack: {
+        flex: 1,
+        shadowColor: '#FFF',
+        shadowOffset: {
+            width: 0,
+            height: 8,
+    },
+    shadowOpacity: 0.44,
+    shadowRadius: 10.32,
+    elevation: 5,
+    // overflow: 'scroll',
+    // borderWidth: 1,
+  },
+  drawerStyles: { flex: 1, width: '50%', backgroundColor: 'transparent' },
+  drawerItem: { alignItems: 'flex-start', marginVertical: 0 },
+  drawerLabel: { color: 'white', marginLeft: -16, fontSize: 18 },
+  title: { color: '#0e1680', fontSize: 18, fontWeight : 'bold' },
+  avatar: {
+    borderRadius: 10,
+    marginBottom: 16,
+    borderColor: 'white',
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+});

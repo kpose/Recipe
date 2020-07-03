@@ -2,7 +2,7 @@ import React from 'react'
 //import {Block, Text } from "expo-ui-kit"
 import { StyleSheet, Text, View, Button } from 'react-native';
 
-const Nutrition = () => {
+const Nutrition = ({ style }) => {
   return (
     <View style={styles.container}>
       <Text >Nutrition...</Text>
@@ -15,7 +15,7 @@ export default Nutrition;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#ffffff",
     alignItems: 'center',
     justifyContent: 'center',
   },
