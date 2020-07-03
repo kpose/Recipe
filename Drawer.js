@@ -3,6 +3,7 @@ import React from 'react'
 import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Ionicons, AntDesign, Feather } from '@expo/vector-icons';
 
 
 
@@ -29,7 +30,7 @@ const Screens = ({navigation}) => {
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => navigation.openDrawer()}>
-                <Text>Menu</Text>
+                <Feather name = "menu" size = {25} />
             </TouchableOpacity>
           ),
         }}>
@@ -46,23 +47,45 @@ const Screens = ({navigation}) => {
 const DrawerContent = (props) => {
     return (
         <DrawerContentScrollView {...props}>
-            {/* <DrawerItemList {...props} /> */}
+            <View >
+                {/* <DrawerItemList {...props} /> */}
+            
+            <View style={styles.logo}>
+                <Image 
+                    source={require('./assets/spoon.jpg')}
+                    resizeMode = "center"
+                    style={{
+                        width: 80,
+                        height: 80,
+                        borderRadius: 30
+                    }} />
+                    <Text> Recipe App </Text>
+            </View>
             <DrawerItem
                 label="Home"
+                labelStyle = {{ marginLeft: -16 }}
                 onPress={() => props.navigation.navigate("Home")}
+                icon = {() => <AntDesign name = "home" color = "red" size = {20}/>}
             />
             <DrawerItem
                 label="Categories"
+                labelStyle = {{ marginLeft: -16 }}
                 onPress={() => props.navigation.navigate("Categories")}
+                icon = {() => <AntDesign name = "switcher" color = "red" size = {20}/>}
             />
             <DrawerItem
                 label="Nutrition"
+                labelStyle = {{ marginLeft: -16 }}
                 onPress={() => props.navigation.navigate("Nutrition")}
+                icon = {() => <AntDesign name = "piechart" color = "red" size = {20}/>}
             />
             <DrawerItem
                 label="Search"
+                labelStyle = {{ marginLeft: -16 }}
                 onPress={() => props.navigation.navigate("Search")}
+                icon = {() => <AntDesign name = "search1" color = "red" size = {20}/>}
             />
+            </View>
         </DrawerContentScrollView>
     )
 }
@@ -81,9 +104,15 @@ export default () => {
 const styles = StyleSheet.create({
     button: {
       alignItems: "center",
-      backgroundColor: "#DDDDDD",
       padding: 10,
       marginHorizontal: 20
-    }
+    },
+    logo: {
+        flex: 0.4,
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 20,
+        marginRight: 20,
+      },
   });
   
