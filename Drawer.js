@@ -1,7 +1,6 @@
 import React from 'react'
 //import { Block, Text, Button } from 'expo-ui-kit';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import Image from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -20,22 +19,44 @@ const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 
-const Screens = () => {
-    <Stack.Navigator>
+const Screens = ({navigation}) => {
+    return (
+        <Stack.Navigator
+        screenOptions={{
+          headerTransparent: true,
+          headerTitle: null,
+          headerLeft: () => (
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.openDrawer()}>
+                <Text>Menu</Text>
+            </TouchableOpacity>
+          ),
+        }}>
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Categories" component={Categories} />
         <Stack.Screen name="Nutrition" component={Nutrition} />
         <Stack.Screen name="Search" component={Search} />
     </Stack.Navigator>
-}
+    ); 
+};
+
+
 export default () => {
     return (
         <Drawer.Navigator initialRouteName="Home">
-            <Drawer.Screen name="Home" component={Home} />
-            <Drawer.Screen name="Categories" component={Categories} />
-            <Drawer.Screen name="Nutrition" component={Nutrition} />
-            <Drawer.Screen name="Search" component={Search} />
+            <Drawer.Screen name="Screens" component={Screens} />
       </Drawer.Navigator>
-    )
-}
+    );
+};
 
+
+const styles = StyleSheet.create({
+    button: {
+      alignItems: "center",
+      backgroundColor: "#DDDDDD",
+      padding: 10,
+      marginHorizontal: 20
+    }
+  });
+  
