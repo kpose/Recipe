@@ -3,17 +3,18 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer} from '@react-navigation/native';
 import Drawer from './Drawer'
+import store from './src/redux/store'
+
+import { Provider } from 'react-redux'
 
 
 export default function App() {
   return (
-    <NavigationContainer>
-    <Drawer />
-      {/* <View style={styles.container}>
-        <Text>Open up App.jss to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View> */}
+    <Provider store = {store}>
+      <NavigationContainer>
+        <Drawer />
     </NavigationContainer>
+    </Provider>
   );
 }
 
