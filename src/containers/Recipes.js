@@ -5,27 +5,28 @@ import { connect } from 'react-redux'
 import {fetchRecipes}  from '../redux/actions/recipeActions'
 import {Recipe} from '../components/Recipe'
 
-const Home = ({ loading, hasErrors, recipes, dispatch}) => {
+const Recipes = ({ loading, hasErrors, recipes, dispatch}) => {
     useEffect(() => {
       dispatch(fetchRecipes())
     }, [dispatch])
-    //let mappedRecipes = Object.keys(recipes).map (key => {})
-  
+
     const renderRecipes = () => {
+      let resolvedRecipe = recipes.recipes;
       if (loading) {
-        return <Text>Loading posts...</Text>
+        return <Text>Loading Recipes...</Text>
       } else if (hasErrors) {
-        return <Text>Unable to display posts.</Text>
+        return <Text>Unable to display recipes at this time.</Text>
       } else{
-        return recipes.map(recipe => {
+        return resolvedRecipe.map(recipe => {
           return <Recipe key= {recipe.id} recipe ={recipe} />
+          
         })
       }
     }
 
   return (
     <View style={styles.container}>
-      <Text >Home...</Text>
+      <Text >Recipes Screen</Text>
       {renderRecipes()}
     </View>
   )
@@ -37,7 +38,7 @@ const mapStateToProps = (state) => ({
   hasErrors: state.recipes.hasErrors,
 });
 
-export default connect (mapStateToProps) (Home)
+export default connect (mapStateToProps) (Recipes)
 
 const styles = StyleSheet.create({
   container: {

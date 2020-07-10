@@ -5,7 +5,7 @@ import nutritionReducer from './nutritionReducer';
 
 const rootReducer = combineReducers({
     recipes: recipeReducer,
-    nutritions: nutritionReducer
+    nutrition: nutritionReducer,
 });
 
 export default rootReducer
