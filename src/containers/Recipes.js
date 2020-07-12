@@ -1,36 +1,47 @@
-import React, { useEffect } from 'react'
-//import {Block, Text } from "expo-ui-kit"
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { connect } from 'react-redux'
-import {fetchRecipes}  from '../redux/actions/recipeActions'
-import {Recipe} from '../components/Recipe'
+import React, { useEffect } from 'react';
+import {
+  StyleSheet,
+  Text,
+  ScrollView,
+  FlatList,
+  ActivityIndicator
+} from 'react-native';
+import { connect } from 'react-redux';
+import { fetchRecipes } from '../redux/actions/recipeActions';
+import { Recipe } from '../components/Recipe';
+import styled from 'styled-components';
 
-const Recipes = ({ loading, hasErrors, recipes, dispatch}) => {
-    useEffect(() => {
-      dispatch(fetchRecipes())
-    }, [dispatch])
+const numOfColumns = 2;
+const Recipes = ({ loading, hasErrors, recipes, dispatch }) => {
+  useEffect(() => {
+    dispatch(fetchRecipes());
+  }, [dispatch]);
 
-    const renderRecipes = () => {
-      let resolvedRecipe = recipes.recipes;
-      if (loading) {
-        return <Text>Loading Recipes...</Text>
-      } else if (hasErrors) {
-        return <Text>Unable to display recipes at this time.</Text>
-      } else{
-        return resolvedRecipe.map(recipe => {
-          return <Recipe key= {recipe.id} recipe ={recipe} />
-          
-        })
-      }
+  const extractKey = ({ id }) => id;
+
+  const renderRecipes = ({ item }) => {
+    if (loading) {
+      return  <ActivityIndicator size="large" color="#00ff00" />
+    } else if (hasErrors) {
+      return <Text>Unable to display posts.</Text>;
+    } else {
+      return <Recipe key={item.id} recipe={item} />;
     }
+  };
 
   return (
-    <View style={styles.container}>
-      <Text >Recipes Screen</Text>
-      {renderRecipes()}
-    </View>
-  )
-}
+    <Container>
+      <FlatList
+        data={recipes}
+        renderItem={renderRecipes}
+        keyExtractor={extractKey}
+        refreshing={true}
+        numColumns={numOfColumns}
+        showsVerticalScrollIndicator={false}
+      />
+    </Container>
+  );
+};
 
 const mapStateToProps = (state) => ({
   loading: state.recipes.loading,
@@ -38,13 +49,13 @@ const mapStateToProps = (state) => ({
   hasErrors: state.recipes.hasErrors,
 });
 
-export default connect (mapStateToProps) (Recipes)
+export default connect(mapStateToProps)(Recipes);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#ffffff",
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const Container = styled.SafeAreaView`
+  flex: 1;
+  background-color: white;
+  align-items: center;
+  justify-content: center;
+`;
+
+

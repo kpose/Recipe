@@ -22,7 +22,7 @@ export function fetchRecipes() {
         dispatch(getRecipes())
 
         try{
-            const response = await fetch("https://api.spoonacular.com/recipes/random?number=10&apiKey=bb4ffe1b2bfb4f498ad3fdc01de73ba5")
+            const response = await fetch("https://api.spoonacular.com/recipes/random?number=50&apiKey=bb4ffe1b2bfb4f498ad3fdc01de73ba5")
             const info = await response.json()
             const data = info.recipes
             /* console.log(dat) */
