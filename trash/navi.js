@@ -7,16 +7,31 @@ import Animated from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
 
 //import screens
-import Categories from './src/screens/Categories';
-import Search from './src/screens/Search';
-import Nutrition from './src/screens/Nutrition';
-import Home from './src/screens/Home';
+import Categories from '../src/screens/Categories';
+import Search from '../src/screens/Search';
+import Nutrition from '../src/screens/Nutrition';
+import Home from '../src/screens/Home';
+import Ingredients from '../src/screens/Ingredients'
+import IngredientDetails from '../src/screens/IngredientDetails'
+import RecipeDetails from '../src/screens/RecipeDetails'
+
 
 
 
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+
+const HomeNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name = 'Home' component = {Home} />
+      <Stack.Screen name = 'Ingredients' component = {Ingredients} />
+      <Stack.Screen name = 'IngredientDetails' component = {IngredientDetails} />
+      <Stack.Screen name = 'RecipeDetails' component = {RecipeDetails} />
+    </Stack.Navigator>
+  )
+}
 
 const Screens = ({ navigation, style }) => {
   return (
@@ -34,7 +49,7 @@ const Screens = ({ navigation, style }) => {
             </TouchableOpacity>
           ),
         }}>
-        <Stack.Screen name="Home">{props => <Home {...props} />}</Stack.Screen>
+        <Stack.Screen name="Home">{props => <HomeNavigator {...props} />}</Stack.Screen>
         <Stack.Screen name="Categories">{props => <Categories {...props} />}</Stack.Screen>
         <Stack.Screen name="Nutrition">{props => <Nutrition {...props} />}</Stack.Screen>
         <Stack.Screen name="Search">{props => <Search {...props} />}</Stack.Screen>

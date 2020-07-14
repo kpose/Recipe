@@ -1,31 +1,33 @@
-import * as actions from '../actions/recipeActions'
+import * as actions from '../actions/recipesAction';
 
 export const initialState = {
-    recipes: [],
-    loading: false,
-    hasErrors: false,
-}
+  loading: true,
+  hasErrors: false,
+  recipe: {},
+};
 
-export default function recipeReducer( state=initialState, action ) {
-    switch (action.type) {
-        case actions.GET_RECIPES:
-            return {
-                ...state,
-                loading: true
-            }
-        case actions.GET_RECIPES_SUCCESS:
-            return {
-                recipes: action.payload,
-                loading: false,
-                hasErrors: false
-            }
-        case actions.GET_RECIPES_FAILURE:
-            return {
-                ...state,
-                loading: false,
-                hasErrors: true
-            }
-        default:
-            return state
-    }
+export default function recipeReducer(state = initialState, action) {
+  switch (action.type) {
+    case actions.GET_RECIPE:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actions.GET_RECIPE_SUCCESS:
+      return {
+        recipe: action.payload,
+        loading: false,
+        hasErrors: false,
+      };
+
+    case actions.GET_RECIPE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        hasErrors: true,
+      };
+
+    default:
+      return state;
+  }
 }

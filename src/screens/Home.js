@@ -1,17 +1,57 @@
-import React from 'react'
-//import {Block, Text } from "expo-ui-kit"
-import { StyleSheet, Text, View, Button } from 'react-native';
-import Recipes from '../containers/Recipes'
+import React, { useEffect } from 'react';
+import {
+  StyleSheet,
+  Text,
+  FlatList,
+  ActivityIndicator
+} from 'react-native';
+import { connect } from 'react-redux';
+import { fetchRecipes } from '../redux/actions/recipeActions';
+import  Recipe  from '../components/Recipe';
+import styled from 'styled-components';
 
-const Categories = ({ style }) => {
+
+
+const numOfColumns = 2;
+const Home = ({ loading, hasErrors, recipes, dispatch }) => {
+  useEffect(() => {
+    dispatch(fetchRecipes());
+  }, [dispatch]);
+
+  const extractKey = ({ id }) => id;
+
+  const renderRecipes = ({ item }) => {
+    if (loading) {
+      return  <ActivityIndicator size="large" color="#00ff00" />
+    } else if (hasErrors) {
+      return <Text>Unable to display posts.</Text>;
+    } else {
+      return <Recipe key={item.id} recipe={item} />;
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <Recipes />
-    </View>
-  )
-}
+    <Container>
+      <FlatList
+        data={recipes}
+        renderItem={renderRecipes}
+        keyExtractor={extractKey}
+        refreshing={true}
+        numColumns={numOfColumns}
+        showsVerticalScrollIndicator={false}
+      />
+    </Container>
+  );
+};
 
-export default Categories;
+
+const mapStateToProps = (state) => ({
+  loading: state.recipes.loading,
+  recipes: state.recipes.recipes,
+  hasErrors: state.recipes.hasErrors,
+});
+
+export default connect(mapStateToProps)(Home);
 
 
 const styles = StyleSheet.create({
@@ -23,3 +63,10 @@ const styles = StyleSheet.create({
     
   },
 });
+
+const Container = styled.SafeAreaView`
+  flex: 1;
+  background-color: white;
+  align-items: center;
+  justify-content: center;
+`;

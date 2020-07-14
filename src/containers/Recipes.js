@@ -57,5 +57,3 @@ const Container = styled.SafeAreaView`
   align-items: center;
   justify-content: center;
 `;
-
-

@@ -6,37 +6,27 @@ import { useNavigation } from '@react-navigation/native';
 
 
 
-function Recipe({ recipe }) {
-  const navigation = useNavigation();
+function RecipeDetails({ recipe }) {
+  //const navigation = useNavigation();
   return (
     <Container>
-      <TouchableOpacity onPress={() => navigation.navigate('RecipeDetailsScreen')}>
-        <Cover>
-        <Image source={{ uri: recipe.image }} />
-      </Cover>
-      </TouchableOpacity>
-
-      <Content>
-        <Title>{recipe.title}</Title>
-        <PriceCaption>
-          <Feather name="clock" size={18} color="green" />
-          {recipe.readyInMinutes} mins
-        </PriceCaption>
-      </Content>
+    <Image source={{ uri: recipe.image }} />
+       <Title>{recipe.title}</Title>
+       <PriceCaption>{recipe.summary}</PriceCaption>
+       
+        
     </Container>
   );
 };
 
-export default Recipe;
+export default RecipeDetails;
 
 const Container = styled.View`
+  flex: 1;
   background: #fff;
-  height: 200px;
-  width: 150px;
-  border-radius: 14px;
-  margin: 18px;
-  margin-top: 20px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  align-items: center;
+  justify-content: center;
+
 `;
 
 const Cover = styled.View`
@@ -48,8 +38,8 @@ const Cover = styled.View`
 `;
 
 const Image = styled.Image`
-  width: 100%;
-  height: 100%;
+  width: 70%;
+  height: 70%;
 `;
 
 const Content = styled.View`
