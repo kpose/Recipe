@@ -28,7 +28,7 @@ const HomeNavigator = () => {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Ingredients" component={Ingredients} />
       <Stack.Screen name="IngredientDetails" component={IngredientDetails} />
-      <Stack.Screen name="RecipeDetailsScreen" component={RecipeDetailsScreen} />
+      <Stack.Screen name="RecipeDetailsScreen" options = {{headerShown: false}} component={RecipeDetailsScreen} />
     </Stack.Navigator>
   );
 };

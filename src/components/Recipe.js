@@ -10,7 +10,8 @@ function Recipe({ recipe }) {
   const navigation = useNavigation();
   return (
     <Container>
-      <TouchableOpacity onPress={() => navigation.navigate('RecipeDetailsScreen')}>
+      <TouchableOpacity 
+      onPress={() => navigation.navigate('RecipeDetailsScreen', {recipe})}>
         <Cover>
         <Image source={{ uri: recipe.image }} />
       </Cover>

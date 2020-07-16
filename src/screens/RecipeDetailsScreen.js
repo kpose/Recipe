@@ -1,43 +1,67 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import RecipeDetails from '../components/RecipeDetails'
-import { connect } from 'react-redux';
-import { fetchRecipe } from '../redux/actions/recipesAction';
+import React from 'react';
+import { StyleSheet, Text, View} from 'react-native';
+import styled from 'styled-components';
+import { Button } from 'react-native-elements';
 
-const RecipeDetailsScreen = ({ match, dispatch, loading, recipe, hasErrors }) => {
-  useEffect(() => {
-    const { id } = match.params
-    dispatch(fetchRecipe(id));
-  }, [dispatch, match]);
 
-  const renderRecipe = () => {
-    if(loading.recipe) return <Text> Loading...</Text>
-    if(hasErrors.recipe) return <Text>Unable to load</Text>
-    return <RecipeDetails recipe = {recipe} />
-  }
-
- 
+const RecipeDetailsScreen = ({route}) => { 
+  const {recipe} = route.params;
   return (
     <View style={styles.container}>
-      {renderRecipe()}
+    <Cover>
+        <Image source={{ uri: recipe.image }} />
+      </Cover>
+      <Title>{recipe.title}</Title>
+    {}
+    <Text>{recipe.summary}</Text>
+    <Button
+  title="VIEW INGREDIENTS"
+  type="solid"
+/>
     </View>
   );
 };
  
 
-const mapStateToProps = (state) => ({
-  loading: state.recipe.loading,
-  recipe: state.recipe.recipe,
-  hasErrors: state.recipe.hasErrors,
-});
 
-export default connect(mapStateToProps)(RecipeDetailsScreen);
+
+export default RecipeDetailsScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'center'
   },
+  image: {
+    
+  }
 });
+
+
+const Cover = styled.View`
+  width: 100%;
+  height: 300px;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  border-bottom-right-radius: 14px;
+  border-bottom-left-radius: 14px;
+  overflow: hidden;
+  background-color: red;
+`;
+
+const Image = styled.Image`
+  width: 100%;
+  height: 100%;
+`;
+
+const Title = styled.Text`
+  color: #3c4560;
+  font-size: 28px;
+  font-weight: 900;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  padding: 15px;
+`;
