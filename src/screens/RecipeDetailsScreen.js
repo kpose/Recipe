@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   image: {
     
@@ -48,6 +48,7 @@ const Cover = styled.View`
   border-bottom-left-radius: 14px;
   overflow: hidden;
   background-color: red;
+  
 `;
 
 const Image = styled.Image`
@@ -59,8 +60,6 @@ const Title = styled.Text`
   color: #3c4560;
   font-size: 28px;
   font-weight: 900;
-  align-items: center;
-  justify-content: center;
   margin-top: 15px;
   margin-bottom: 30px;
   padding: 15px;

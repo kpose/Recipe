@@ -3,7 +3,7 @@ import {
   StyleSheet,
   Text,
   FlatList,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchRecipes } from '../redux/actions/recipeActions';
@@ -18,7 +18,7 @@ const Home = ({ loading, hasErrors, recipes, dispatch }) => {
     dispatch(fetchRecipes());
   }, [dispatch]);
 
-  const extractKey = ({ id }) => id;
+  //const extractKey = ({ id }) => id;
 
   const renderRecipes = ({ item }) => {
     if (loading) {
@@ -34,9 +34,8 @@ const Home = ({ loading, hasErrors, recipes, dispatch }) => {
     <Container>
       <FlatList
         data={recipes}
-        renderItem={renderRecipes}
-        keyExtractor={extractKey}
-        refreshing={true}
+        renderItem = {renderRecipes}
+        keyExtractor = {item =>item.id}
         numColumns={numOfColumns}
         showsVerticalScrollIndicator={false}
       />
@@ -70,3 +69,12 @@ const Container = styled.SafeAreaView`
   align-items: center;
   justify-content: center;
 `;
+
+
+
+
+/* renderItem={renderRecipes}
+        keyExtractor={extractKey}
+        refreshing={true}
+        numColumns={numOfColumns}
+        showsVerticalScrollIndicator={false} */

@@ -1,6 +1,6 @@
 import * as actions from '../actions/recipesAction';
 
-export const initialState = {
+const initialState = {
   loading: true,
   hasErrors: false,
   recipe: {},
@@ -12,6 +12,7 @@ export default function recipeReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
+        hasErrors: false,
       };
     case actions.GET_RECIPE_SUCCESS:
       return {
