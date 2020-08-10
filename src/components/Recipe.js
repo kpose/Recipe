@@ -2,16 +2,16 @@ import React from 'react';
 import { StyleSheet, Text, View, Button,TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 import { Feather } from '@expo/vector-icons';
-//import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 
 
 function Recipe({ recipe }) {
-  //const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <Container>
       <TouchableOpacity 
-      //onPress={() => navigation.navigate('RecipeDetailsScreen', {recipe})}
+      onPress={() => navigation.navigate('RecipeDetailsScreen', {recipe})}
       >
         <Cover>
         <Image source={{ uri: recipe.image }} />
