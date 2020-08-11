@@ -15,7 +15,7 @@ import { createAppContainer } from 'react-navigation';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import {DrawerContent } from './DrawerContent'
 //import screens
 import Categories from '../screens/Categories';
 import Search from '../screens/Search';
@@ -97,7 +97,7 @@ const NutritionStackScreen = ({navigation}) => {
 
 const RootNavigator = () => {
   return (
-    <Drawer.Navigator initialRouteName="HomeStackScreen">
+    <Drawer.Navigator drawerContent = {props => <DrawerContent {...props} />}>
         <Drawer.Screen name="HomeStackScreen" component={HomeStackScreen} options = {{
           title: "Home"
         }} />
