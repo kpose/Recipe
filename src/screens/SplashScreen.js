@@ -9,18 +9,31 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import * as Animatable from "react-native-animatable";
+import LottieView from 'lottie-react-native';
+
+
+const cookingAnimation = require('../../assets/chef.json')
 
 const SplashScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Animatable.Image
+        <Animatable.View
           animation="bounceIn"
           duraton="1500"
-          source={require("../../assets/icon.png")}
+          
           style={styles.logo}
           resizeMode="stretch"
-        />
+        >
+        <LottieView
+        source={cookingAnimation}
+        autoPlay
+        
+        resizeMode="cover"
+      />
+      </Animatable.View>
+
+        
       </View>
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
         <Text style={styles.title}>BOUNDLESS!</Text>
@@ -28,7 +41,7 @@ const SplashScreen = ({ navigation }) => {
         <View style={styles.button}>
           <TouchableOpacity onPress={() => navigation.navigate("SignInScreen")}>
             <LinearGradient
-              colors={["#ba9634", "#cfaf5b"]}
+              colors={["#b83d0f", "#fa638c"]}
               style={styles.signIn}
             >
               <Text style={styles.textSign}>Get Started</Text>
@@ -43,13 +56,13 @@ const SplashScreen = ({ navigation }) => {
 
 export default SplashScreen;
 
-const { height } = Dimensions.get("screen");
-const height_logo = height * 0.28;
+const { height, width } = Dimensions.get("screen");
+const height_logo = height / 2;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ba9634",
+    backgroundColor: "#b83d0f",
   },
   header: {
     flex: 2,

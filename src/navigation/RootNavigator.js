@@ -73,7 +73,11 @@ const HomeStackScreen = ({navigation}) => {
 
 const RootNavigator = ({navigation}) => {
   return (
-    <WelcomeStackScreen.Navigator >
+    <WelcomeStackScreen.Navigator screenOptions={{
+      headerShown: false
+    
+      
+    }} >
       <WelcomeStackScreen.Screen name="SplashScreen" component={SplashScreen} />
       <WelcomeStackScreen.Screen name="SignInScreen" component={SignInScreen} />
       <WelcomeStackScreen.Screen name="SignUpScreen" component={SignUpScreen} />
