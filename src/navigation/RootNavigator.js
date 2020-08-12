@@ -25,11 +25,15 @@ import Home from '../screens/Home';
 import Ingredients from '../screens/Ingredients';
 import IngredientDetails from '../screens/IngredientDetails';
 import RecipeDetailsScreen from '../screens/RecipeDetailsScreen';
+import SplashScreen from '../screens/SplashScreen';
+import SignUpScreen from '../screens/SignUpScreen';
+import SignInScreen from '../screens/SignInScreen';
 
 
 const HomeStack = createStackNavigator();
 const NutritionStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+const WelcomeStackScreen = createStackNavigator();
 
 
 const HomeStackScreen = ({navigation}) => {
@@ -67,6 +71,18 @@ const HomeStackScreen = ({navigation}) => {
 }
 
 
+const RootNavigator = ({navigation}) => {
+  return (
+    <WelcomeStackScreen.Navigator >
+      <WelcomeStackScreen.Screen name="SplashScreen" component={SplashScreen} />
+      <WelcomeStackScreen.Screen name="SignInScreen" component={SignInScreen} />
+      <WelcomeStackScreen.Screen name="SignUpScreen" component={SignUpScreen} />
+      <WelcomeStackScreen.Screen name="DrawerNavigator" component={DrawerNavigator} />
+  </WelcomeStackScreen.Navigator>
+  );
+}
+
+
 const NutritionStackScreen = ({navigation}) => {
   return (
     <NutritionStack.Navigator screenOptions={{
@@ -95,7 +111,7 @@ const NutritionStackScreen = ({navigation}) => {
 
 //make categories and search stacks
 
-const RootNavigator = () => {
+const DrawerNavigator = () => {
   return (
     <Drawer.Navigator drawerContent = {props => <DrawerContent {...props} />}>
         <Drawer.Screen name="HomeStackScreen" component={HomeStackScreen} options = {{
